@@ -1,36 +1,29 @@
-// const CryptoZombie = artifacts.require("CryptoZombie.sol");
-
-// const ZombieFactory = artifacts.require("zombiefactory.sol");
-// const ZombieFeeding = artifacts.require("zombiefeeding.sol");
-// const ZombieAttack = artifacts.require("zombieattack.sol");
-// const ZombieHelper = artifacts.require("zombiehelper.sol");
-// const ZombieOwnership = artifacts.require("zombieownership.sol");
-
-const test721Contract = artifacts.require("test721.sol");
+const ZombieNFT = artifacts.require("ZombieNFT.sol");
+const CryptoZombie = artifacts.require("CryptoZombie.sol");
 
 module.exports = async function(deployer, network, accounts) {
   // const deployerAddress = "0xC624181E929d986bF69A7F8FC7385f9750d2F6B9";
   const deployerAddress = accounts[0];
-  const receiver1 = accounts[1];
-  const nftName = "NFTTest";
-  const nftSymbol = "TFT";
+  // const receiver1 = accounts[1];
+  const nftName = "Zombie NFT";
+  const nftSymbol = "ZFT";
 
-  const testNFTUri = {
-    "name": "TFT #1",
-    "description": "This is a NFTTest #1",
-    "image": "https://abc.com/TFT1.png",
-    "strength": 20
-  }
+  // const testNFTUri = {
+  //   "name": "TFT #1",
+  //   "description": "This is a NFTTest #1",
+  //   "image": "https://abc.com/TFT1.png",
+  //   "strength": 20
+  // }
+  await deployer.deploy(ZombieNFT, deployerAddress, nftName, nftSymbol)
+  let nft = ZombieNFT.deployed()
+  await deployer.deploy(CryptoZombie, deployerAddress)
+  let game = CryptoZombie.deployed()
 
-  // await deployer.deploy(ZombieFactory, deployerAddress);
-  // await deployer.deploy(ZombieFeeding);
-  // await deployer.deploy(ZombieAttack);
-  // await deployer.deploy(ZombieHelper);
-  // await deployer.deploy(ZombieOwnership, nftName, nftSymbol);
-  // await deployer.link(ConvertLib, MetaCoin);
-  // deployer.deploy(MetaCoin);
+  // Game contract setttings
+  // await game..setNFTContract(nft.address)
+  // await game.setLevelUpFee(1)
 
-  await deployer.deploy(test721Contract, deployerAddress, nftName, nftSymbol);
-  let instance = await test721Contract.deployed();
-  await instance.mintTo(receiver1, testNFTUri);
+  // await deployer.deploy(test721Contract, deployerAddress, nftName, nftSymbol);
+  // let instance = await test721Contract.deployed();
+  // await instance.mintTo(receiver1, testNFTUri);
 };
