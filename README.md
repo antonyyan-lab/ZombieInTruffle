@@ -60,11 +60,22 @@ In Truffle console, use Nodejs code to interact functions in contracts, e.g.:
 let accounts = await web3.eth.getAccounts()
 
 // Get the latest deployed ZombieNFT contract instant and mint a nft to the second wallet
-let nft = ZombieNFT.deployed()  
+let nft = await ZombieNFT.deployed()  
 nft.mintTo(accounts[1])  
 
 // Set nft contract address in to CryptoZombie contract and create a zombie for the 3rd account 
-let game = CryptoZombie.deployed()  
-await game.setNFTContracts(nft.address)
+let game = await CryptoZombie.deployed()  
+await game.setNFTContract(nft.address)
 await game.createRandomZombie("MyZombie", {from: accounts[2]})
+
+// level up a zombie
+await game.levelUp(0, { from: accounts[0], value: web3.utils.toWei('0.001', 'ether') })
+
+// To add time
+await web3.currentProvider.send({method: "evm_increaseTime", params: [86400], id: new Date().getTime()}, () => {})
+await web3.currentProvider.send({method: "evm_mine", params: []}, () => {})
+
+// To check the current block time
+await web3.eth.getBlock(await web3.eth.getBlockNumber())
 ```
+
