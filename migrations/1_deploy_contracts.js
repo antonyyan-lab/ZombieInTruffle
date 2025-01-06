@@ -1,8 +1,16 @@
+const ZombieNFT1155 = artifacts.require("ZombieNFT1155.sol");
 const ZombieNFT = artifacts.require("ZombieNFT.sol");
 const CryptoZombie = artifacts.require("CryptoZombie.sol");
 
 module.exports = async function(deployer, network, accounts) {
   const deployerAddress = accounts[0];
+
+  await deployer.deploy(ZombieNFT1155, deployerAddress, "")
+  let nft1155 = await ZombieNFT1155.deployed()
+
+  console.log('The deployed NFT1155 Contracts is: ' + nft1155.address)
+
+  // The following is for the deployment of ERC721 contract
   const nftName = "Zombie NFT";
   const nftSymbol = "ZFT";
 
