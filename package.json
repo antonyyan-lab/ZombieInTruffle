@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
+    "@openzeppelin/contracts-upgradeable": "^5.1.0",
+    "@truffle/contract-schema": "^3.4.16"
+  },
+  "version": "20.4.0-unofficial.5"
+}
